@@ -17,3 +17,4 @@ for (var j = 0; j < 10; j++) {
 // 解决
 //1: var --> let
 //2: (arr[j] = function(){console.log(j)})(i) 立即执行函数
+// 每个立即执行函数都会产生一个独一无二的AO 保存传入的变量

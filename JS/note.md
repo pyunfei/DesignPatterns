@@ -63,3 +63,5 @@ arr[i] = /*函数体*/function () {
   console.log(i)
 }
 ```
+- 4.js
+> call/apply

@@ -48,3 +48,15 @@ a()
  *                            2 : aAO  
  *                            3 : GO 
  */
+let str = 1;
+if(function f(){}){
+  str+= typeof f
+}
+console.log(str)
+(function(){
+  var a = b = 5
+})()
+console.log(b)
+console.log(a)
+
+console.log(0.14 * 100)

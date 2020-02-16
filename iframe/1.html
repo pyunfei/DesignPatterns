@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>发送方</title>
+</head>
+
+<body>
+  <script>
+    window.onload = function () {
+      var popup = window.open('http://192.168.1.8:5000/2.html');
+      popup.onload = function () {  //必须要有onload
+        // 假设当前页面没有改变location，这条语句会成功添加message到发送队列中去（targetOrigin设置对了）
+        popup.postMessage("发送方的信息:::::!", "http://192.168.1.8:5000/2.html");
+
+        function receiveMessage(event) {
+          if (event.origin !== "http://192.168.1.8:5000") {
+            return;
+          }
+          console.log('接受返回的回信:::', event.data);
+        }
+        window.addEventListener("message", receiveMessage, false);
+      }
+    };
+  </script>
+</body>
+
+</html>

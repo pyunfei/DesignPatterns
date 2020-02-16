@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>发送方</title>
+</head>
+
+<body>
+  <h1>this is a new tab, crate by <code>window.open()</code></h1>
+
+  <script>
+    document.onreadystatechange = function (e) {
+      if (document.readyState === 'complete') {
+        window.addEventListener('message', receiveMessage, false);
+      }
+    };
+
+    function receiveMessage(event) {
+      if (event.origin !== "http://192.168.1.8:5000") {
+        return;
+      }
+      console.log('message', event.data);
+      console.log('origin', event.source);
+      document.write(event.data);
+
+      // 假设你已经验证了所受到信息的origin (任何时候你都应该这样做), 一个很方便的方式就是把enent.source
+      // 作为回信的对象，并且把event.origin作为targetOrigin
+      event.source.postMessage('接收方的回应:::', event.origin);
+    }
+  </script>
+</body>
+
+</html>

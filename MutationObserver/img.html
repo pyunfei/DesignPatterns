@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input id="inputFile" type="file" accept="image/*" />
+  <img id="srcFile" src="" alt="预览">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+  <script>
+    const inputFile = document.getElementById('inputFile');
+    const srcFile = document.getElementById('srcFile');
+
+    inputFile.addEventListener('change', (e) => {
+      // console.time('blob::::')
+      const file = e.target.files[0];
+      const formData = new FormData();
+      srcFile.src = URL.createObjectURL(file);
+      // console.timeEnd('blob::::')
+      formData.append('upload_file', file);
+      
+      $.ajax({
+        url: 'http://localhost:3000/upload',
+        type: 'POST',
+        data: formData,
+        dataType: 'JSON',
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+          console.log(data);
+        },
+      });
+    });
+
+    // inputFile.addEventListener('change', (e) => {
+    //   const file = e.target.files[0];
+    //   const render = new FileReader();
+    //   if (file) {
+    //     console.time('base64::::')
+    //     render.addEventListener('load', () => {
+    //       srcFile.src = render.result;
+    //     }, false);
+    //     render.readAsDataURL(file);
+    //     console.timeEnd('base64::::')
+    //   }
+    // }, false);
+
+  </script>
+</body>
+
+</html>

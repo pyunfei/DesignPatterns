@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #root {
+      width: 100%;
+      height: 20px;
+      background-color: red;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <button id="btn">变化</button>
+  <script>
+    const dom = document.getElementById('root');
+    const btn = document.getElementById('btn');
+    const callback = (mutationsList, observer) => {
+      for(let mutation of mutationsList) {
+        console.log(mutation)
+      }
+    }
+    const observer = new MutationObserver(callback);
+    let config = {
+      attributes: true, //目标节点的属性变化
+      childList: true, //目标节点的子节点的新增和删除
+      characterData: true, //如果目标节点为characterData节点(一种抽象接口,具体可以为文本节点,注释节点,以及处理指令节点)时,也要观察该节点的文本内容是否发生变化
+      subtree: true, //目标节点所有后代节点的attributes、childList、characterData变化
+    };
+
+    observer.observe(dom, config)
+
+    btn.addEventListener('click',() => {
+      dom.innerText = '111'
+    })
+  </script>
+</body>
+
+</html>

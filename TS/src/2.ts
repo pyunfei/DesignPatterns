@@ -39,3 +39,40 @@ namespace I {
   const user = new LaoPeng('彭雲飛');
   user.read('红楼梦', '贾宝玉大战林黛玉', 99)
 }
+
+namespace J {
+  interface IProps {
+    value: string
+  }
+  interface IState {
+    num: string
+  }
+  interface Logger {
+    getLogger(): string
+  }
+  abstract class Person<T1, T2>{
+    props: T1;
+    state!: T2;
+    constructor(props: T1) {
+      this.props = props
+    }
+    abstract render(): string
+  }
+
+  class LaoPeng extends Person<IProps, IState> implements Logger {
+    constructor(props: IProps) {
+      super(props)
+      this.state = {
+        num: ''
+      }
+    }
+    render() {
+      return ''
+    }
+    getLogger() {
+      return '日志'
+    }
+  }
+
+  const laopeng = new LaoPeng({ value: '老彭' })
+}

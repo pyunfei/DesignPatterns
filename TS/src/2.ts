@@ -169,8 +169,8 @@ namespace L {
     }
 
     (async function () {
-      const result = await getData<IResUserInfo>('/userInfo');
-      
+      const result1 = await getData<IResUserInfo>('/userInfo');
+      const result2 = await getData<IResUserCount>('/userCount');
     })()
   }
 }

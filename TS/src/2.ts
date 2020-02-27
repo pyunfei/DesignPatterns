@@ -162,15 +162,21 @@ namespace L {
       footer: string
     }
 
-    async function getData<U>(url: string) {
-      const res = await fetch(url);
-      const result: Promise<IResData<U>> = await res.json();
-      return result;
+    interface IParams {
+      [key: string]: string | number
     }
-
+    async function getData<U>(url: string, params?: IParams) {
+      try {
+        const res = await fetch(url);
+        const result: Promise<IResData<U>> = await res.json();
+        return result;
+      } catch (error) { }
+    }
     (async function () {
-      const result1 = await getData<IResUserInfo>('/userInfo');
-      const result2 = await getData<IResUserCount>('/userCount');
+      try {
+        const result1 = await getData<IResUserInfo>('/userInfo');
+        const result2 = await getData<IResUserCount>('/userCount');
+      } catch (error) { }
     })()
   }
 }

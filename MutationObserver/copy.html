@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    input {
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <input type="text" id="text" />
+  <button id="copy">copy</button>
+  <script>
+    window.onload = function(){
+      const text = document.getElementById('text');
+      const copy = document.getElementById('copy');
+      text.value = '123'
+      copy.addEventListener('click', () => {
+        text.select();
+        document.execCommand('copy')
+      })
+    }
+  </script>
+</body>
+</html>

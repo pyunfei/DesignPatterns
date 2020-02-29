@@ -15,9 +15,7 @@ test.call()
   console.log(obj)
 }
 
-
 {
-
   Function.prototype.call = function (target, ...args) {
     const context = target;
     const fn = Symbol();

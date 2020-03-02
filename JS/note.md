@@ -72,6 +72,8 @@ arr[i] = /*函数体*/function () {
 - reduce
 - 防抖
 - 节流
+- 按顺序请求一组url
+- 控制并发数
 
 - 6.js
 > Promise

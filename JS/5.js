@@ -41,23 +41,41 @@
 }
 
 {
-  let a = { name: 2 }
-  function A() {
-    let name = 1;
-    fn = () => {
-      console.log(this.name)
+  const throttle = (func, wait = 50) => {
+    // 上一次执行该函数的时间
+    let lastTime = 0
+    return function (...args) {
+      // 当前时间
+      let now = +new Date()
+      // 将当前时间和上一次执行函数时间对比
+      // 如果差值大于设置的等待时间就执行函数
+      if (now - lastTime > wait) {
+        lastTime = now
+        func.apply(this, args)
+      }
     }
-    return fn;
   }
-  A.bind(a)()()
-}
 
-{
-  async function getDate() {
-    return await Promise.resolve('你猜啊');
+  const debounce = (func, wait = 50) => {
+    // 缓存一个定时器id
+    let timer = 0
+    // 这里返回的函数是每次用户实际调用的防抖函数
+    // 如果已经设定过定时器了就清空上一次的定时器
+    // 开始一个新的定时器，延迟执行用户传入的方法
+    return function (...args) {
+      if (timer) clearTimeout(timer)
+      timer = setTimeout(() => {
+        func.apply(this, args)
+      }, wait)
+    }
   }
-  const data = getDate();
-  console.log(data)
+
+  setInterval(
+    throttle(() => {
+      console.log(2)
+    }, 5000),
+    1
+  )
 }
 
 {
@@ -75,4 +93,86 @@
   ]
   const newNest = nest(obj);
   console.log(JSON.stringify(newNest, null, 2))
+}
+
+{
+  const parentSort = (target) => {
+    Promise.all(target.map(item => new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', item);
+      xhr.responseType = 'json';
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+          if (xhr.status == 200) {
+            resolve(xhr.response)
+          }
+        }
+      }
+      xhr.send();
+    }))).then(res => {
+      console.log(res)
+    })
+  }
+
+  const paintOrder = (target) => {
+    const result = [];
+    let count = 0;
+    target.forEach((item, index) => {
+      sendRequest(item, index)
+    });
+    function sendRequest(item, index) {
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', item);
+      xhr.responseType = 'json';
+      xhr.onreadystatechange = function (event) {
+        if (xhr.readyState == 4) {
+          if (xhr.status == 200) {
+            result[index] = event.target.response;
+            count++;
+            if (count === target.length) {
+              console.log(result)
+            }
+          }
+        } else {
+          result[index] = event.statusText;
+          count++;
+          if (count === target.length) {
+            console.log(result)
+          }
+        }
+      }
+      xhr.send();
+    }
+  }
+}
+
+{
+  class MaxNum {
+    constructor(max) {
+      this._max = max;
+      this.maxTarget = [];
+    }
+    take(task) {
+      if (this._max > 0) {
+        this._max--;
+        task();
+      } else {
+        this.maxTarget.push(task)
+      }
+    }
+    leave() {
+      this._max++;
+      const task = this.maxTarget.shift();
+      if (task)
+        this.take();
+    }
+  }
+  const max = new MaxNum(2);
+  console.time("default")
+  max.take(() => max.leave(), 1000);
+  max.take(() => max.leave(), 2000);
+  max.take(() => {
+    max.leave();
+    console.timeEnd('default')
+  }, 3000);
 }

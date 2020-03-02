@@ -65,3 +65,13 @@ arr[i] = /*函数体*/function () {
 ```
 - 4.js
 > call/apply
+
+- 5.js
+> JS日常小实现
+- flat
+- reduce
+- 防抖
+- 节流
+
+- 6.js
+> Promise

@@ -176,3 +176,17 @@
     console.timeEnd('default')
   }, 3000);
 }
+
+{
+  var a = 0;
+  async function test() {
+    let result = a + await 10;
+    console.log(result);
+  }
+
+  var a = 0;
+  async function test() {
+    let result = await 10 + a;
+    console.log(result);
+  }
+}

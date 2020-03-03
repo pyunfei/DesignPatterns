@@ -77,3 +77,6 @@ arr[i] = /*函数体*/function () {
 
 - 6.js
 > Promise
+
+- 7.js
+> 深克隆

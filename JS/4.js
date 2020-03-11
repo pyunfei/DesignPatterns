@@ -38,4 +38,18 @@ test.call()
   }
   const testObj = { a: 1 }
   test.apply(testObj, [1, 2])
+
+  ~(function (prototype) {
+    prototype.bind = function (context, ...outerArgs) {
+      let thatFunc = this;
+      let fBound = function (...innerArgs) {
+        return thatFunc.apply(
+          this instanceof thatFunc ? this : context,
+          [...outerArgs, ...innerArgs]
+        )
+      }
+      fBound.prototype = Object.create(thatFunc.prototype)
+      return fBound;
+    }
+  })(Function.prototype);
 }

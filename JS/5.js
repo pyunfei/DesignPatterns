@@ -178,6 +178,10 @@
 }
 
 {
+  
+}
+
+{
   var a = 0;
   async function test() {
     let result = a + await 10;

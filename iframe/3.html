@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>防抖节流</title>
+</head>
+<style>
+  .box {
+    width: 300px;
+    height: 300px;
+    color: #FFF;
+    font-size: 40px;
+    text-align: center;
+    background: #333;
+  }
+</style>
+
+<body>
+
+  <div class="box">0</div>
+  <script>
+    const box = document.getElementsByClassName('box')[0];
+    let num = 0;
+    const throttle = (func, wait = 50) => {
+      // 上一次执行该函数的时间
+      let lastTime = 0
+      return function (...args) {
+        // 当前时间
+        let now = +new Date()
+        // 将当前时间和上一次执行函数时间对比
+        // 如果差值大于设置的等待时间就执行函数
+        if (now - lastTime > wait) {
+          lastTime = now
+          func.apply(this, args)
+        }
+      }
+    }
+
+    const debounce = (func, wait = 50) => {
+      // 缓存一个定时器id
+      let timer = 0
+      // 这里返回的函数是每次用户实际调用的防抖函数
+      // 如果已经设定过定时器了就清空上一次的定时器
+      // 开始一个新的定时器，延迟执行用户传入的方法
+      return function (...args) {
+        if (timer) clearTimeout(timer)
+        timer = setTimeout(() => {
+          func.apply(this, args)
+        }, wait)
+      }
+    }
+
+    const handler = () => {
+      num++;
+      box.innerHTML = num;
+    }
+    const _handler = throttle(handler, 5000);
+    // const _handler = debounce(handler, 5000);
+    box.addEventListener('mousemove', _handler)
+  </script>
+</body>
+
+</html>

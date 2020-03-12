@@ -75,6 +75,7 @@ arr[i] = /*函数体*/function () {
 - 按顺序请求一组url
 - 控制并发数
 - 柯理化
+- 继承
 
 - 6.js
 > Promise

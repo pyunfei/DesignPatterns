@@ -178,7 +178,21 @@
 }
 
 {
-  
+  // 柯理化
+}
+
+{
+  function Person(money) { this.money = money }
+  Person.prototype.getMoney = () => { return this.money }
+
+  function Son(smallMoney) { Person.call(this, smallMoney) }
+  Son.prototype = Object.create(Person.prototype,
+    { constructor: { value: Son } }
+  )
+  var son = new Son(100)
+  console.log(son.getMoney())
+  console.log(son instanceof Son)
+  console.log(son instanceof Person)
 }
 
 {
@@ -196,10 +210,10 @@
 
   var num = 10;
   var obj = {
-    num : 8,
+    num: 8,
     inner: {
       num: 6,
-      print:function(){
+      print: function () {
         console.log(this.num)
       }
     }

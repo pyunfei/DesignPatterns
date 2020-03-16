@@ -1,11 +1,11 @@
 import Vue from 'vue';
 
-const vm = new Vue({
+let vm = new Vue({
   el: '#app',
   data() {
     return {
       message: "彭雲飛",
-      hobby: ['a', 'b', { 'c': 'c' }],
+      hobby: [1, 2, 3],
       computer: {
         name1: 'mac',
         name2: 'win'
@@ -15,9 +15,4 @@ const vm = new Vue({
   watch: {},
   computed: {}
 });
-
-setTimeout(function(){
-  vm.message = '好水啊1';
-  vm.message = '好水啊2';
-  vm.message = '好水啊3';
-},2000)
+console.log(vm)

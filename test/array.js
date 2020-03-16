@@ -23,7 +23,7 @@ methods.forEach(name => {
 });
 
 const arr = [1,2,3]
-Object.defineProperty(arr,'a',{
+Object.defineProperty(arr,arr[0],{
   get(){
     return value
   },

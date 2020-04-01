@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <iframe name="test" src="2.html" frameborder="0"></iframe>
+  <script>
+    var t = window.frames['test'];
+    console.log('不正常', t.test instanceof Array);
+    console.log('不正常', test.constructor === Array)
+    window.onload = function () {
+      console.log(t.dom)
+    }
+  </script>
+</body>
+
+</html>·

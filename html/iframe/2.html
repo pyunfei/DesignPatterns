@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  2.html
+  <div id="root">123</div>
+  <script>
+    var test = [];
+    var dom = (function(){
+      return { root }
+    })()
+    console.log('正常',test instanceof Array)
+    console.log('正常',test.constructor === Array)
+  </script>
+</body>
+</html>

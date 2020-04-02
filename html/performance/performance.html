@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <link href="https://cdn.bootcss.com/element-ui/2.13.0/theme-chalk/index.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+  <script src="https://cdn.bootcss.com/element-ui/2.13.0/index.js"></script>
+  <script src="./performance.js"></script>
+  <script src="./history.js"></script>
+  <style type="text/css">
+    .anim {
+      /*-moz-transform: translateX(800px);
+        -ms-transform: translateX(800px);
+        -webkit-transform: translateX(800px);
+        transform: translateX(800px);
+        -webkit-transition: -webkit-transform .5s;
+        -moz-transition: -moz-transform .5s;
+        -ms-transition: -ms-transform .5s;
+        transition: transform .5s;*/
+    }
+
+    .performance {
+      position: absolute;
+      z-index: 20000;
+      top: 50%;
+      left: 50%;
+      margin-left: -400px;
+      margin-top: -200px;
+      height: 400px;
+      width: 800px;
+      background: rgba(0, 0, 0, .8);
+      font-size: 14px;
+      color: white;
+      font-weight: bold;
+      text-shadow: 2px 2px 2px black, -2px -2px 2px black;
+    }
+
+    #performance-close {
+      position: absolute;
+      top: 0;
+      right: 0;
+      border: 3px solid white;
+      width: 20px;
+      height: 20px;
+      border-radius: 20px;
+      line-height: 20px;
+      text-align: center;
+      font-family: "Open Sans", arial, sans-serif;
+      font-size: 16px;
+      background: white;
+      color: black;
+      text-shadow: none;
+      cursor: pointer;
+    }
+
+    .performance h1 {
+      text-align: center;
+    }
+
+    .performance h2 {
+      position: absolute;
+      top: 30px;
+      right: 20px;
+      margin: 0;
+      opacity: .3;
+      text-shadow: none;
+      font-style: italic;
+    }
+
+    .performance-wrap {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 96%;
+      height: 96%;
+      color: white;
+    }
+
+    .performance-content {
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 100%;
+      height: 100%;
+    }
+
+    .performance ul {
+      list-style: none;
+      margin: 30px;
+      padding: 0;
+    }
+
+    .performance li {
+      clear: both;
+      line-height: 20px;
+      height: 20px;
+      margin: 10px 0;
+    }
+
+    .performance-lab,
+    .performance-bar {
+      display: inline-block;
+      height: 16px;
+      float: left;
+    }
+
+    .performance-lab {
+      width: 20%;
+      text-align: right;
+      margin-right: 20px;
+    }
+
+    .performance-bar {
+      width: 70%;
+    }
+
+    .performance-color {
+      display: inline-block;
+      height: 16px;
+      width: 0%;
+      background: #666;
+      box-shadow: 2px 2px 2px black;
+      border-radius: 0 2px 2px 0;
+      -webkit-transition: width .5s .6s;
+      -moz-transition: width .5s .6s;
+      -ms-transition: width .5s .6s;
+      transition: width .5s .6s;
+      float: left;
+    }
+
+    .performance-bar-value {
+      float: right;
+      margin-left: 10px;
+    }
+
+    .performance-color-b {
+      background: #2D8ED0;
+    }
+
+    .performance-color-r {
+      background: #F40F03;
+    }
+
+    .performance-color-r1 {
+      background: #F66603;
+    }
+
+    .performance-color-o {
+      background: #F89F05;
+    }
+
+    .performance-color-o1 {
+      background: #FAD304;
+    }
+
+    .performance-color-y {
+      background: #FAD304;
+    }
+
+    .performance-color-g1 {
+      background: #F8FE03;
+    }
+
+    .performance-color-g2 {
+      background: #B1DF06;
+    }
+
+    .performance-color-g {
+      background: #44D10F;
+    }
+
+    .performance-color-p {
+      background: #419eff;
+    }
+  </style>
+  <div id="app">
+    <div @drop.prevent="handleDrag" @dragover.prevent="()=>{}">
+      <br /><br />
+      <el-row>
+        <el-col :span="4">
+          <div class="grid-content bg-purple">
+            <el-alert v-for="item in fileList" :title="item" type="info" :closable="false">
+            </el-alert>
+          </div>
+        </el-col>
+        <el-col :span="16">
+          <div class="grid-content bg-purple-light">
+            <el-progress v-for="item in time" show-text='false' :text-inside="true" :stroke-width="26"
+              :percentage="item">
+            </el-progress>
+          </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="grid-content bg-purple-light">
+            <el-alert v-for="item in time" :title="item === 0 ? '0ms' : item" type="info" :closable="false">
+            </el-alert>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
+  </div>
+  <div class="performance" id="performance">
+    <div class="performance-wrap">
+      <div class="performance-content">
+        <ul>
+          <li id="performance-dnsDuration">
+            <span class="performance-lab">DNS查询耗时: </span>
+            <span class="performance-bar">
+              <em class="performance-color performance-color-p"></em>
+              <span class="performance-bar-value">0ms</span>
+            </span>
+          </li>
+          <li id="performance-tcpDuration">
+            <span class="performance-lab">TCP链接耗时: </span>
+            <span class="performance-bar">
+              <em class="performance-color performance-color-p"></em>
+              <span class="performance-bar-value">0ms</span>
+            </span>
+          </li>
+          <li id="performance-requestDuration">
+            <span class="performance-lab">request请求耗时: </span>
+            <span class="performance-bar">
+              <em class="performance-color performance-color-p"></em>
+              <span class="performance-bar-value">0ms</span>
+            </span>
+          </li>
+          <li id="performance-domDuration">
+            <span class="performance-lab">dom树解析耗时: </span>
+            <span class="performance-bar">
+              <em class="performance-color performance-color-p"></em>
+              <span class="performance-bar-value">0ms</span>
+            </span>
+          </li>
+          <li id="performance-whiteTime">
+            <span class="performance-lab">白屏时间: </span>
+            <span class="performance-bar">
+              <em class="performance-color performance-color-p"></em>
+              <span class="performance-bar-value">0ms</span>
+            </span>
+          </li>
+          <li id="performance-domreadyTime">
+            <span class="performance-lab">domready时间: </span>
+            <span class="performance-bar">
+              <em class="performance-color performance-color-p"></em>
+              <span class="performance-bar-value">0ms</span>
+            </span>
+          </li>
+          <li id="performance-onloadTime">
+            <span class="performance-lab">onload时间: </span>
+            <span class="performance-bar">
+              <em class="performance-color performance-color-p"></em>
+              <span class="performance-bar-value">0ms</span>
+            </span>
+          </li>
+          <li id="performance-js">
+            <span class="performance-lab">js请求个数: </span>
+            <span class="performance-bar">
+              <em class="performance-color performance-color-p"></em>
+              <span class="performance-bar-value">0ms</span>
+            </span>
+          </li>
+          <li id="performance-css">
+            <span class="performance-lab">css请求个数: </span>
+            <span class="performance-bar">
+              <em class="performance-color performance-color-p"></em>
+              <span class="performance-bar-value">0ms</span>
+            </span>
+          </li>
+          <li id="performance-img">
+            <span class="performance-lab">img请求个数: </span>
+            <span class="performance-bar">
+              <em class="performance-color performance-color-p"></em>
+              <span class="performance-bar-value">0ms</span>
+            </span>
+          </li>
+        </ul>
+        <!-- <div id="performance-close">x</div> -->
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    new Vue({
+      el: '#app',
+      data: {
+        fileList: ["重定向时间", "DNS解析时间", "TCP完成握手时间",
+          "HTTP请求响应完成时间",
+          "DOM开始加载前所花费时间",
+          "DOM加载完成时间",
+          "DOM结构解析完成时间",
+          "脚本加载时间",
+          "onload事件时间",
+          "页面完全加载时间",
+        ],
+        time: [],
+      },
+      methods: {
+        getDate() {
+          const result = getTiming();
+          source = result.source;
+          time = Object.values(result.time);
+          this.time.push(...Object.values(result.time))
+          console.log(result)
+        },
+      },
+      mounted() {
+        this.getDate();
+      },
+    });
+
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<script src="./error.js"></script>
+<script>
+  var feErrorMonitor = new ErrorMonitor()
+  feErrorMonitor.init();
+  console.log(feErrorMonitor)
+</script>
+
+<body>
+  <!-- 标签资源请求error -->
+  <img src="/404.png">
+  <script>
+    // 普通错误
+    error
+  </script>
+  <script>
+    // 异步错误
+    setTimeout(() => {
+      error
+    })
+    // Promise error
+    new Promise((resolve) => {
+      resolve();
+    }).then(() => {
+      throw 'promise error'
+    });
+    new Promise((resolve, reject) => {
+      reject(123);
+    })
+    // ajax error
+    fetch('/404.png')
+    var xhr = new XMLHttpRequest()
+    xhr.open('GET', '/404.png')
+    xhr.send()
+  </script>
+</body>
+
+</html>

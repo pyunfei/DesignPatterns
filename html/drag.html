@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      width: 500px;
+      height: 200px;
+      background-color: #ccc;
+      border: 1px solid black;
+      line-height: 200px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin-top: -100px;
+      margin-left: -200px;
+      text-align: center;
+      display: none;
+    }
+
+    .m1 {
+      width: 300px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class='box'>
+    请把文件拖到这里
+  </div>
+  <script>
+      let oBox = document.querySelector('.box');
+
+      document.addEventListener('dragover', ev => {
+        console.log('dragover')
+        oBox.style.display = 'block';
+        
+        ev.preventDefault()
+      }, false);
+      oBox.addEventListener('dragenter', () => {
+        console.log('dragenter')
+
+        oBox.innerHTML = '请松手';
+      }, false);
+      oBox.addEventListener('dragleave', () => {
+        console.log('bbb')
+        oBox.innerHTML = '请拖到这里';
+      }, false);
+
+      oBox.addEventListener('drop', ev => {
+        console.log(ev.dataTransfer.files)
+        oBox.style.display = 'block';
+
+        let data = new FormData();
+        Array.from(ev.dataTransfer.files).forEach(file => {
+          data.append('f1', file)
+          console.log(data)
+          oBox.innerHTML = `${file.name}上传中<meter id="m1" value="" min="0" max="100"></meter>`;
+        });
+
+
+        ev.preventDefault()
+      }, false)
+  </script>
+</body>
+
+</html>

@@ -1,5 +1,7 @@
 ## js基础
 
+this指向总是指向ECstack栈顶, 每次有函数指向都会创建一个当前AO并且指向, 
+
 - AO-->Activation Object  
 > 执行期上下文, 预编译产生的对象, <多次执行便会产生多个独一无二的AO>
 - GO-->Global Object

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    section {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      padding: 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #161616;
+    }
+    section .circle {
+      position :absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #e51e2e;
+      clip-path: circle(70% at right -20%);
+    }
+
+    header {
+      position:absolute;
+
+    }
+  </style>
+</head>
+<body>
+  <section>
+    <div class="circle"></div>
+    <header>
+      <a href=""><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1607765032895&di=89eb343ddeb0a8efec9c1275fe0870bf&imgtype=0&src=http%3A%2F%2Fa0.att.hudong.com%2F30%2F29%2F01300000201438121627296084016.jpg" class="logo" /></a>
+      <ul>
+        <li><a href="">Home</a></li>
+        <li><a href="">Menu</a></li>
+        <li><a href="">What's New</a></li>
+        <li><a href="">Contact</a></li>
+      </ul>
+    </header>
+  </section>
+</body>
+</html>

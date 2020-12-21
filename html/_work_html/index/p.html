@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style type="text/css">
+    .nite-writer-pen {
+      color: red;
+-webkit-text-emphasis-style: '·';
+text-emphasis-style: '·';
+-webkit-text-emphasis-color: red;
+text-emphasis-color:red;
+-webkit-text-emphasis-position:under;
+text-emphasis-position: under;
+    }
+  </style>
+</head>
+
+<body>
+  <p id="p">aishfaoihfoiahfoahdfoiahfdoshoigsoidshioshghudsihfisjhiodshoishoighdihishoighsoiv</p>
+  <script type="text/javascript">
+    p.onmouseup = function (e) {
+      var txt = window.getSelection();
+      console.log(txt)
+      var selectStr = txt.toString();
+      console.log(selectStr)
+      if (selectStr !== '') {
+        replaceSelectedStrByEle(txt, selectStr, 'nite-writer-pen')
+      }
+    }
+
+    var replaceSelectedStrByEle = function (selecter, selectStr, className) {
+      if (selectStr.trim != "") {
+        var rang = selecter.getRangeAt(0);
+        var ele = document.createElement("span");
+        ele.style.cssText = "-webkit-text-emphasis-style: '·';text-emphasis-style: '·';text-emphasis-color:red;-webkit-text-emphasis-position:under;text-emphasis-position:under";
+        ele.className = className;
+        ele.textContent = selectStr;
+        rang.surroundContents(ele);
+      }
+    }
+  </script>
+</body>
+
+</html>

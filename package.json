@@ -12,6 +12,6 @@
   "dependencies": {
     "multiparty": "^4.2.1",
     "react-dom": "^16.13.0",
-    "vue": "^2.6.11"
+    "vue": "^3.0.0"
   }
 }
